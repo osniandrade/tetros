@@ -8,6 +8,7 @@ var music_position = 0.0
 
 const DISABLED = true
 const ENABLED = false
+const MIN_AUDIO_LEVEL = -24
 
 func _ready():
 	gui = $GUI
@@ -30,13 +31,16 @@ func _button_pressed(button_name):
 				_music(PLAY)
 		"Music":
 			if state == PLAYING:
-				if gui.music:
-					_music(PLAYING)
+				if gui.music > MIN_AUDIO_LEVEL:
+					print("Music changed. Level: %d" % gui.music)
+					_music(PLAY)
 				else:
 					_music(STOP)
 		"Sound":
-			# copy gui.sound value to data
-			print("Changed sound setting")
+			if gui.sound > MIN_AUDIO_LEVEL:
+				print("Sound changed. Level: %d" % gui.sound)
+			else:
+				print("Sound off.")
 		"About":
 			gui.set_button_state("About", DISABLED)
 
@@ -47,8 +51,10 @@ func _start_game():
 	_music(PLAY)
 
 func _music(action):
-	if gui.music and action == PLAY:
-		$MusicPlayer.play(music_position)
+	if action == PLAY:
+		$MusicPlayer.volume_db = gui.music
+		if !$MusicPlayer.is_playing():
+			$MusicPlayer.play(music_position)
 		print("Music started")
 	else:
 		music_position = $MusicPlayer.get_playback_position()
