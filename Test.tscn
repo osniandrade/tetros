@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Test.gd" type="Script" id=1]
+[ext_resource path="res://Main.tscn" type="PackedScene" id=2]
 
 [node name="Test" type="Control"]
 anchor_right = 1.0
@@ -10,38 +11,76 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Main" parent="." instance=ExtResource( 2 )]
+
 [node name="Shape" type="Label" parent="."]
-margin_left = 224.0
-margin_top = 72.0
-margin_right = 264.0
-margin_bottom = 86.0
+margin_left = 216.0
+margin_top = 24.0
+margin_right = 256.0
+margin_bottom = 38.0
 
 [node name="Grid" type="Label" parent="."]
-margin_left = 216.0
-margin_top = 112.0
-margin_right = 256.0
-margin_bottom = 126.0
+margin_left = 280.0
+margin_top = 24.0
+margin_right = 320.0
+margin_bottom = 38.0
 
 [node name="PickShape" type="Button" parent="."]
-margin_left = 56.0
-margin_top = 64.0
-margin_right = 147.0
-margin_bottom = 84.0
+margin_left = 64.0
+margin_top = 24.0
+margin_right = 155.0
+margin_bottom = 44.0
 text = "Pick a Shape"
 
 [node name="RotateLeft" type="Button" parent="."]
 margin_left = 64.0
-margin_top = 96.0
+margin_top = 48.0
 margin_right = 145.0
-margin_bottom = 116.0
+margin_bottom = 68.0
 text = "Rotate Left"
 
 [node name="RotateRight" type="Button" parent="."]
-margin_left = 56.0
-margin_top = 128.0
-margin_right = 145.0
-margin_bottom = 148.0
+margin_left = 64.0
+margin_top = 72.0
+margin_right = 153.0
+margin_bottom = 92.0
 text = "Rotate Right"
+
+[node name="AddShapeToGrid" type="Button" parent="."]
+margin_left = 64.0
+margin_top = 96.0
+margin_right = 191.0
+margin_bottom = 116.0
+text = "Add Shape to Grid"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RemoveShapeFromGrid" type="Button" parent="."]
+margin_left = 64.0
+margin_top = 120.0
+margin_right = 238.0
+margin_bottom = 140.0
+text = "Remove Shape From Grid"
+
+[node name="Lock" type="Button" parent="."]
+margin_left = 64.0
+margin_top = 144.0
+margin_right = 105.0
+margin_bottom = 164.0
+text = "Lock"
+
+[node name="SpinBox" type="SpinBox" parent="."]
+margin_left = 120.0
+margin_top = 144.0
+margin_right = 194.0
+margin_bottom = 168.0
+min_value = -10.0
+max_value = 210.0
+value = 35.0
 [connection signal="button_down" from="PickShape" to="." method="_on_PickShape_button_down"]
 [connection signal="button_down" from="RotateLeft" to="." method="_on_RotateLeft_button_down"]
 [connection signal="button_down" from="RotateRight" to="." method="_on_RotateRight_button_down"]
+[connection signal="button_down" from="AddShapeToGrid" to="." method="_on_AddShapeToGrid_button_down"]
+[connection signal="button_down" from="RemoveShapeFromGrid" to="." method="_on_RemoveShapeFromGrid_button_down"]
+[connection signal="button_down" from="Lock" to="." method="_on_Lock_button_down"]
