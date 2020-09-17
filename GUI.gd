@@ -6,9 +6,6 @@ var music = 0
 var sound = 0
 var min_vol
 
-const CELL_BG1 = Color(.1, .1, .1)  # almost black
-const CELL_BG2 = Color(0)  # black
-
 signal button_pressed(button_name)
 
 func _ready():
@@ -17,8 +14,8 @@ func _ready():
 	min_vol = find_node("Music").get_min()
 	find_node("Sound").set_min(min_vol)
 	add_cells(grid, 200)
-	clear_cells(grid, CELL_BG1)
-	clear_cells(next, CELL_BG2)
+	clear_cells(grid)
+	clear_cells(next)
 
 func add_cells(node, n):
 	var num_cells = node.get_child_count()  # how many cells are already in the grid
@@ -26,9 +23,9 @@ func add_cells(node, n):
 		node.add_child(node.get_child(0).duplicate())  # duplicates the cell that already exists in the grid
 		num_cells += 1
 
-func clear_cells(node, color):
+func clear_cells(node):
 	for cell in node.get_children():
-		cell.modulate = color  # goes through all cells and changes its color
+		cell.modulate = Color(0)  # goes through all cells and changes its color
 
 func _on_About_button_down():
 	$AboutBox.popup_centered()
