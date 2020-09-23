@@ -1,13 +1,14 @@
 extends CenterContainer
 
 enum { STOPPED, PLAYING, PAUSED, STOP, PLAY, PAUSE }
+enum { LEFT, RIGHT }
+
+const DISABLED = true
+const ENABLED = false
 
 var gui
 var state = STOPPED
 var music_position = 0.0
-
-const DISABLED = true
-const ENABLED = false
 var grid = []  # array of boolean values to indicating if a cell contains a tile
 var cols  # number of columns in the grid
 var shape: ShapeData  # stores the shape data for the current shape
@@ -26,8 +27,30 @@ func clear_grid():  # clear the grid when the game is started
 		grid[i] = false
 	gui.clear_all_cells()
 
+func move_shape(new_pos, dir = null):
+	remove_shape_from_grid()
+	# rotate shape and store undo direction
+	dir = rotate(dir)
+	# if we can place the shape then update the position, else undo rotation
+	var ok = place_shape(new_pos)
+	if ok:
+		pos = new_pos
+	else:
+		rotate(dir)
+	add_shape_to_grid()
+	return ok
 
-func add_shape_to_the_grid():
+func rotate(dir):
+	match dir:
+		LEFT:
+			shape.rotate_left()
+			dir = RIGHT
+		RIGHT:
+			shape.rotate_right()
+			dir = LEFT
+	return dir
+
+func add_shape_to_grid():
 	place_shape(pos, true, false, shape.color)
 
 func remove_shape_from_grid():
